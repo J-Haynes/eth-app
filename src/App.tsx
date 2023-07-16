@@ -9,7 +9,6 @@ function App() {
     <div>
       <EthHeader></EthHeader>
       <EthOverview></EthOverview>
-      <p>hi</p>
     </div>
   )
 }
