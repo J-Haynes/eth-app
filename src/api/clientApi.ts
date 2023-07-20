@@ -50,3 +50,5 @@ export function fetchGasPrice() {
       throw new Error(err.message)
     })
 }
+
+// https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=1&interval=daily
