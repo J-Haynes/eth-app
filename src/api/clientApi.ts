@@ -10,10 +10,10 @@ export function fetchEthPrice() {
     .get(`${etherscanURL}?module=stats&action=ethprice&apikey=${apiKey}`)
     .then((res) => {
       return {
-        ethPrice: Math.floor(Number(res.body.result.ethusd)),
-        btcPrice: Math.floor(
+        ethPrice: Number(res.body.result.ethusd).toFixed(2),
+        btcPrice: (
           Number(res.body.result.ethusd) / Number(res.body.result.ethbtc)
-        ),
+        ).toFixed(2),
       }
     })
     .catch((err) => {

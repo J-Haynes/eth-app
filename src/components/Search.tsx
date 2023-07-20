@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input, Segment } from 'semantic-ui-react'
+import { Input, Segment, Form } from 'semantic-ui-react'
 
 export default function SearchBar() {
   const [ethAddress, setEthAddress] = useState('')
@@ -10,15 +10,24 @@ export default function SearchBar() {
     setEthAddress(e.target.value)
   }
 
+  const submitHandler = () => {
+    console.log('urmom')
+  }
+
   return (
     <>
       <Segment raised>
-        <Input
-          fluid
-          icon="ethereum"
-          onChange={changeHandler}
-          value={ethAddress}
-        ></Input>
+        <Form onSubmit={submitHandler}>
+          <Input
+            fluid
+            icon="search"
+            onChange={changeHandler}
+            value={ethAddress}
+            placeholder="ethereum search..."
+            iconPosition="left"
+            onSubmit={submitHandler}
+          ></Input>
+        </Form>
       </Segment>
     </>
   )
