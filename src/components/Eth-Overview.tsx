@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react'
-import { Card, Grid, Icon } from 'semantic-ui-react'
+import { Card, Grid, Icon, Segment } from 'semantic-ui-react'
 
 import { fetchEthPrice, fetchEthSupply, fetchGasPrice } from '../api/clientApi'
 
@@ -22,13 +22,13 @@ export default function EthOverview() {
   }, [])
 
   return (
-    <div>
+    <Segment padded raised>
       <Grid>
         <Grid.Row>
           <Grid.Column width={4}>
             <Card>
               <Card.Content>
-                <Card.Header style={{ color: '#1d6fa5' }}>
+                <Card.Header style={{ color: '#1b1c1d' }}>
                   <Icon name="ethereum"></Icon> Ethereum:
                 </Card.Header>
                 <Card.Description textAlign="left">
@@ -41,7 +41,7 @@ export default function EthOverview() {
           <Grid.Column width={4}>
             <Card>
               <Card.Content>
-                <Card.Header style={{ color: '#1d6fa5' }}>
+                <Card.Header style={{ color: '#1b1c1d' }}>
                   <Icon name="ethereum"></Icon> Eth Supply:
                 </Card.Header>
                 <Card.Description textAlign="left">
@@ -53,11 +53,10 @@ export default function EthOverview() {
           <Grid.Column width={4}>
             <Card>
               <Card.Content>
-                <Card.Header style={{ color: '#1d6fa5' }}>
+                <Card.Header style={{ color: '#1b1c1d' }}>
                   <Icon name="ethereum"></Icon> Gas Price:
                 </Card.Header>
                 <Card.Description textAlign="left">
-                  <Icon name="usd"></Icon>
                   {gasPrice} gwei
                 </Card.Description>
               </Card.Content>
@@ -66,7 +65,7 @@ export default function EthOverview() {
           <Grid.Column width={4}>
             <Card>
               <Card.Content>
-                <Card.Header style={{ color: '#1d6fa5' }}>
+                <Card.Header style={{ color: '#1b1c1d' }}>
                   <Icon name="bitcoin"></Icon> Bitcoin:
                 </Card.Header>
                 <Card.Description textAlign="left">
@@ -78,6 +77,6 @@ export default function EthOverview() {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </div>
+    </Segment>
   )
 }

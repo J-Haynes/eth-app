@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { Header } from 'semantic-ui-react'
+import { Header, Segment } from 'semantic-ui-react'
 
-import "./header.css"
+import './header.css'
 
 export default function EthHeader() {
   return (
-    <div>
-      <Header as="h2" block>
+    <Segment padded raised>
+      <Header textAlign="center" as="h1">
         Eth-App
       </Header>
-    </div>
+    </Segment>
   )
 }
