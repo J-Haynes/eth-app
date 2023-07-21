@@ -1,25 +1,25 @@
 import request from 'superagent'
-import { fetchEthPriceModel } from '../models/ethModels'
+// import { fetchEthPriceModel } from '../models/ethModels'
 
 const etherscanURL = 'https://api.etherscan.io/api'
 
 const apiKey = 'THWJ7IUUNKYV24EIRNPWQNRCBT1G35CXZD'
 
-export function fetchEthPrice() {
-  return request
-    .get(`${etherscanURL}?module=stats&action=ethprice&apikey=${apiKey}`)
-    .then((res) => {
-      return {
-        ethPrice: Number(res.body.result.ethusd).toFixed(2),
-        btcPrice: (
-          Number(res.body.result.ethusd) / Number(res.body.result.ethbtc)
-        ).toFixed(2),
-      }
-    })
-    .catch((err) => {
-      throw new Error(err.message)
-    })
-}
+// export function fetchEthPrice() {
+//   return request
+//     .get(`${etherscanURL}?module=stats&action=ethprice&apikey=${apiKey}`)
+//     .then((res) => {
+//       return {
+//         ethPrice: Number(res.body.result.ethusd).toFixed(2),
+//         btcPrice: (
+//           Number(res.body.result.ethusd) / Number(res.body.result.ethbtc)
+//         ).toFixed(2),
+//       }
+//     })
+//     .catch((err) => {
+//       throw new Error(err.message)
+//     })
+// }
 
 export function fetchEthSupply() {
   return request
@@ -51,4 +51,25 @@ export function fetchGasPrice() {
     })
 }
 
-// https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=1&interval=daily
+export function fetchEthPrices() {
+  return request
+    .get(
+      'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_market_cap=true&include_24hr_change=true'
+    )
+    .then((res) => {
+      console.log(res)
+      return {
+        ethPrice: res.body.ethereum.usd,
+        ethPrice24hr: res.body.ethereum.usd_24h_change,
+        ethMarketCap: res.body.ethereum.usd_market_cap,
+      }
+    })
+}
+
+export function fetchBtcPrice() {
+  return request
+    .get(
+      'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&precision=2'
+    )
+    .then((res) => res.body.bitcoin.usd)
+}

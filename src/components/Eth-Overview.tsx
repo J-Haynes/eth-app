@@ -1,13 +1,34 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Grid, Icon, Segment, Popup } from 'semantic-ui-react'
 
-import { fetchEthPrice, fetchEthSupply, fetchGasPrice } from '../api/clientApi'
+import {
+  fetchEthPrices,
+  fetchEthSupply,
+  fetchGasPrice,
+  fetchBtcPrice,
+} from '../api/clientApi'
 
 export default function EthOverview() {
-  const [prices, setPrices] = useState({
-    ethPrice: '0.0',
-    btcPrice: '0.0',
+  const [ethPrices, setEthPrices] = useState({
+    ethPrice: 0,
+    ethPrice24hr: 0,
+    ethMarketCap: 0,
   })
+
+  // const dailyChange = ethPrices.ethPrice24hr - ethPrices.ethPrice
+
+  // function dailyChange(ethPrices.ethPrice24hr, ethPrices.ethPrice) {
+  //   if ((ethPrices.ethPrice - ethPrice.ethPrice24hr) >= 0) {
+  //     return (
+  //       <Icon name="angle up"></Icon>
+  //     )
+  //   } else {
+  //     return (
+  //       <Icon name="angle down"></Icon>
+
+  //     )
+  //   }
+  // }
 
   const [ethSupply, setEthSupply] = useState(0)
   const [gasPrice, setGasPrice] = useState({
@@ -16,13 +37,13 @@ export default function EthOverview() {
     high: 0,
   })
 
+  const [btcPrice, setBtcPrice] = useState(0)
+
   useEffect(() => {
-    fetchEthPrice().then((res) => setPrices(res))
+    fetchEthPrices().then((res) => setEthPrices(res))
     fetchEthSupply().then((res) => setEthSupply(res))
-    fetchGasPrice().then((res) => {
-      console.log(res)
-      setGasPrice(res)
-    })
+    fetchGasPrice().then((res) => setGasPrice(res))
+    fetchBtcPrice().then((res) => setBtcPrice(res))
   }, [])
 
   return (
@@ -37,7 +58,20 @@ export default function EthOverview() {
                 </Card.Header>
                 <Card.Description textAlign="left">
                   <Icon name="usd"></Icon>
-                  {prices.ethPrice}
+                  {ethPrices.ethPrice.toFixed(2)}
+                  {ethPrices.ethPrice24hr >= 0 ? (
+                    <>
+                      <Icon name="angle up"></Icon>
+                      <Icon name="usd" size="small" color="green" />
+                      <span>{ethPrices.ethPrice24hr.toFixed(2)}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Icon name="angle down"></Icon>
+                      <Icon name="usd" size="small" color="red" />
+                      <span>{ethPrices.ethPrice24hr.toFixed(2)}</span>
+                    </>
+                  )}
                 </Card.Description>
               </Card.Content>
             </Card>
@@ -83,7 +117,7 @@ export default function EthOverview() {
                 </Card.Header>
                 <Card.Description textAlign="left">
                   <Icon name="usd"></Icon>
-                  {prices.btcPrice}
+                  {btcPrice}
                 </Card.Description>
               </Card.Content>
             </Card>
