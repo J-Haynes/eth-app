@@ -15,21 +15,6 @@ export default function EthOverview() {
     ethMarketCap: 0,
   })
 
-  // const dailyChange = ethPrices.ethPrice24hr - ethPrices.ethPrice
-
-  // function dailyChange(ethPrices.ethPrice24hr, ethPrices.ethPrice) {
-  //   if ((ethPrices.ethPrice - ethPrice.ethPrice24hr) >= 0) {
-  //     return (
-  //       <Icon name="angle up"></Icon>
-  //     )
-  //   } else {
-  //     return (
-  //       <Icon name="angle down"></Icon>
-
-  //     )
-  //   }
-  // }
-
   const [ethSupply, setEthSupply] = useState(0)
   const [gasPrice, setGasPrice] = useState({
     low: 0,
