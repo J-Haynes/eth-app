@@ -1,5 +1,7 @@
 import request from 'superagent'
 
+import { blocksModel } from '../models/ethModels'
+
 const etherscanURL = 'https://api.etherscan.io/api'
 
 const apiKey = 'THWJ7IUUNKYV24EIRNPWQNRCBT1G35CXZD'
@@ -40,7 +42,6 @@ export function fetchEthPrices() {
       'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_market_cap=true&include_24hr_change=true'
     )
     .then((res) => {
-      console.log(res)
       return {
         ethPrice: res.body.ethereum.usd,
         ethPrice24hr: res.body.ethereum.usd_24h_change,
@@ -61,4 +62,52 @@ export function fetchBtcPrice() {
     .catch((err) => {
       throw new Error(err.message)
     })
+}
+
+// export function fetchEthRewardBlocks(block: number): blocksModel[] {
+//   const blocks = [] as blocksModel[]
+//   for (let i = 0; i < 5; i++) {
+//     const hexBlock = (block - i).toString(16)
+//     request
+//       .get(
+//         `${etherscanURL}?module=block&action=getblockreward&blockno=${hexBlock}&apikey=${apiKey}`
+//       )
+//       .then((res) => {
+//         blocks.push({
+//           block: block - i,
+//           miner: Number(res.body.result.miner),
+//           size: parseInt(res.body.result.size, 16),
+//           date: parseInt(res.body.result.timestamp, 16),
+//           txs: res.body.result.transactions.length,
+//         })
+//       })
+//   }
+//   return blocks
+// }
+
+export function fetchEthRewardBlocks(block: number): Promise<blocksModel[]> {
+  const blocksPromises: Promise<blocksModel>[] = []
+
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => {}, 500)
+    const theBlock = block - i
+    const hexBlock = theBlock.toString(16)
+    const requestPromise = request
+      .get(
+        `${etherscanURL}?module=proxy&action=eth_getBlockByNumber&tag=${hexBlock}&boolean=true&apikey=${apiKey}`
+      )
+      .then((res) => ({
+        key: i,
+        block: block - i,
+        miner: res.body.result.miner,
+        size: res.body.result.size,
+        date: res.body.result.timestamp,
+        txs: res.body.result.transactions.length,
+      }))
+      .catch((err) => {
+        throw new Error(err.message)
+      })
+    blocksPromises.push(requestPromise)
+  }
+  return Promise.all(blocksPromises)
 }
