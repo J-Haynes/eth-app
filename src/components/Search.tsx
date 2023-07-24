@@ -26,6 +26,7 @@ export default function SearchBar() {
             placeholder="ethereum search..."
             iconPosition="left"
             onSubmit={submitHandler}
+            disabled
           ></Input>
         </Form>
       </Segment>
