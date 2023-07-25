@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Segment, Button, Table } from 'semantic-ui-react'
+import { Segment, Button, Table, Grid, TableHeader } from 'semantic-ui-react'
 
 import { Network, Alchemy } from 'alchemy-sdk'
 
@@ -22,17 +22,39 @@ export default function EthContainer() {
     alchemy.core.getBlockNumber().then((block) => {
       console.log(block)
       fetchEthRewardBlocks(block).then((res: blocksModel[]) => {
-        console.log(res)
         setBlocks(res)
       })
     })
   }, [])
 
   return (
-    <Segment>
-      {blocks.map((element) => (
-        <p>{element.miner}</p>
-      ))}
+    <Segment vertical>
+      <Grid>
+        <Grid.Row columns={2}>
+          <Grid.Column>
+            <Table inverted>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Cell>
+                    <h3>Latest Blocks</h3>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Header>
+            </Table>
+          </Grid.Column>
+          <Grid.Column>
+            <Table inverted>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Cell>
+                    <h3>Latest Blocks</h3>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Header>
+            </Table>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Segment>
   )
 }
