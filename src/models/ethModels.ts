@@ -4,9 +4,10 @@ export interface fetchEthPriceModel {
 }
 
 export interface blocksModel {
+  key: number
   block: number
-  miner: number
-  size: number
-  date: number
+  miner: string
+  size: string
+  date: string
   txs: number
 }

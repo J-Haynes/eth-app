@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Segment, Button, Table, Grid, TableHeader } from 'semantic-ui-react'
+import { Segment, Table, Grid, Label } from 'semantic-ui-react'
 
 import { Network, Alchemy } from 'alchemy-sdk'
 
@@ -22,6 +22,7 @@ export default function EthContainer() {
     alchemy.core.getBlockNumber().then((block) => {
       console.log(block)
       fetchEthRewardBlocks(block).then((res: blocksModel[]) => {
+        console.log(res)
         setBlocks(res)
       })
     })
@@ -32,7 +33,7 @@ export default function EthContainer() {
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column>
-            <Table inverted>
+            <Table>
               <Table.Header>
                 <Table.Row>
                   <Table.Cell>
@@ -40,17 +41,39 @@ export default function EthContainer() {
                   </Table.Cell>
                 </Table.Row>
               </Table.Header>
+              <Table.Body>
+                {blocks.map((block) => {
+                  return (
+                    <Table.Row key={block.key}>
+                      <Table.Cell>
+                        <Label color="grey">Block</Label> {block.block}
+                      </Table.Cell>
+                      <Table.Cell>
+                        Miner {block.miner.slice(0, 4)}...
+                        {block.miner.slice(-5)}
+                        <br />
+                        Txs: {block.txs}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Label color="grey">Size</Label>{' '}
+                        {(parseInt(block.size, 16) / 1024).toFixed(1)} kilobytes
+                      </Table.Cell>
+                    </Table.Row>
+                  )
+                })}
+              </Table.Body>
             </Table>
           </Grid.Column>
           <Grid.Column>
-            <Table inverted>
+            <Table>
               <Table.Header>
                 <Table.Row>
                   <Table.Cell>
-                    <h3>Latest Blocks</h3>
+                    <h3>Latest Transactions</h3>
                   </Table.Cell>
                 </Table.Row>
               </Table.Header>
+              <Table.Header></Table.Header>
             </Table>
           </Grid.Column>
         </Grid.Row>
