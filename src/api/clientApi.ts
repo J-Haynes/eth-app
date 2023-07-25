@@ -94,7 +94,7 @@ export function fetchEthRewardBlocks(block: number): Promise<blocksModel[]> {
     const hexBlock = theBlock.toString(16)
     const requestPromise = request
       .get(
-        `${etherscanURL}?module=proxy&action=eth_getBlockByNumber&tag=${hexBlock}&boolean=true&apikey=${apiKey}`
+        `${etherscanURL}?module=proxy&action=eth_getBlockByNumber&tag=${hexBlock}&boolean=false&apikey=${apiKey}`
       )
       .then((res) => ({
         key: i,
@@ -103,6 +103,7 @@ export function fetchEthRewardBlocks(block: number): Promise<blocksModel[]> {
         size: res.body.result.size,
         date: res.body.result.timestamp,
         txs: res.body.result.transactions.length,
+        transactions: res.body.result.transactions,
       }))
       .catch((err) => {
         throw new Error(err.message)
@@ -111,29 +112,3 @@ export function fetchEthRewardBlocks(block: number): Promise<blocksModel[]> {
   }
   return Promise.all(blocksPromises)
 }
-
-const myObj = [
-  {
-    key: 0,
-    block: 17769280,
-    miner: '0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5',
-    size: '0x21075',
-    date: '0x64bf9887',
-  },
-
-  {
-    key: 1,
-    block: 17769279,
-    miner: '0x4838b106fce9647bdf1e7877bf73ce8b0bad5f97',
-    size: '0x70124',
-    date: '0x64bf987b',
-  },
-
-  {
-    key: 2,
-    block: 17769278,
-    miner: '0xbaf6dc2e647aeb6f510f9e318856a1bcd66c5e19',
-    size: '0x1e5da',
-    date: '0x64bf986f',
-  },
-]
