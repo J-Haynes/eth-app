@@ -64,30 +64,30 @@ export function fetchBtcPrice() {
     })
 }
 
-export function fetchEthRewardBlocks(block: number): Promise<blocksModel[]> {
-  const blocksPromises: Promise<blocksModel>[] = []
+// export function fetchEthRewardBlocks(block: number): Promise<blocksModel[]> {
+//   const blocksPromises: Promise<blocksModel>[] = []
 
-  for (let i = 0; i < 3; i++) {
-    setTimeout(() => {}, 500)
-    const theBlock = block - i
-    const hexBlock = theBlock.toString(16)
-    const requestPromise = request
-      .get(
-        `${etherscanURL}?module=proxy&action=eth_getBlockByNumber&tag=${hexBlock}&boolean=false&apikey=${apiKey}`
-      )
-      .then((res) => ({
-        key: i,
-        block: block - i,
-        miner: res.body.result.miner,
-        size: res.body.result.size,
-        date: res.body.result.timestamp,
-        txs: res.body.result.transactions.length,
-        transactions: res.body.result.transactions,
-      }))
-      .catch((err) => {
-        throw new Error(err.message)
-      })
-    blocksPromises.push(requestPromise)
-  }
-  return Promise.all(blocksPromises)
-}
+//   for (let i = 0; i < 3; i++) {
+//     setTimeout(() => {}, 500)
+//     const theBlock = block - i
+//     const hexBlock = theBlock.toString(16)
+//     const requestPromise = request
+//       .get(
+//         `${etherscanURL}?module=proxy&action=eth_getBlockByNumber&tag=${hexBlock}&boolean=false&apikey=${apiKey}`
+//       )
+//       .then((res) => ({
+//         key: i,
+//         block: block - i,
+//         miner: res.body.result.miner,
+//         size: res.body.result.size,
+//         date: res.body.result.timestamp,
+//         txs: res.body.result.transactions.length,
+//         transactions: res.body.result.transactions,
+//       }))
+//       .catch((err) => {
+//         throw new Error(err.message)
+//       })
+//     blocksPromises.push(requestPromise)
+//   }
+//   return Promise.all(blocksPromises)
+// }

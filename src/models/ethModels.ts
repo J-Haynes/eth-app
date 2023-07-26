@@ -8,6 +8,7 @@ export interface blocksModel {
   block: number
   miner: string
   date: number
+  dateStr: string
   txs: number
   transactions: transactionsModel[]
 }

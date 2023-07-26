@@ -5,7 +5,6 @@ import { Network, Alchemy } from 'alchemy-sdk'
 
 import { useState } from 'react'
 
-import { fetchEthRewardBlocks } from '../api/clientApi'
 import { blocksModel, transactionsModel } from '../models/ethModels'
 
 const alchemySettings = {
@@ -30,6 +29,7 @@ export default function EthContainer() {
             block: res.number,
             miner: res.miner,
             date: res.timestamp,
+            dateStr: new Date(res.timestamp * 1000).toLocaleString(),
             txs: res.transactions.length,
             transactions: res.transactions.map((tx) => ({
               id: tx.hash,
@@ -81,10 +81,22 @@ export default function EthContainer() {
                         >
                           Miner: {block.miner}
                         </Popup>
-                        <Popup trigger={<p>Txs: {block.txs}</p>}></Popup>
+                        <Popup
+                          disabled
+                          trigger={<p>Txs: {block.txs}</p>}
+                        ></Popup>
                       </Table.Cell>
                       <Table.Cell>
-                        {Math.floor(Date.now() / 1000) - block.date}s ago
+                        <Popup
+                          position="top center"
+                          trigger={
+                            <p>
+                              {Math.floor(Date.now() / 1000) - block.date}s ago
+                            </p>
+                          }
+                        >
+                          {block.dateStr}
+                        </Popup>
                       </Table.Cell>
                     </Table.Row>
                   )

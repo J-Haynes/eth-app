@@ -4,8 +4,12 @@ import { Segment, Grid, Icon, Popup } from 'semantic-ui-react'
 export default function Footer() {
   return (
     <Segment basic>
-      <Grid columns={2}>
+      <Grid columns={3}>
         <Grid.Column>Made by Jack Haynes</Grid.Column>
+        <Grid.Column textAlign="center">
+          Powered by{' '}
+          <a href="https://www.coingecko.com/en/api">CoinGecko API</a>
+        </Grid.Column>
         <Grid.Column textAlign="right">
           <a
             href="https://github.com/J-Haynes"
