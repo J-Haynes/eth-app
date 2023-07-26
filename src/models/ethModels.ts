@@ -16,5 +16,5 @@ export interface transactionsModel {
   id: string | undefined
   to: string | undefined
   from: string | undefined
-  value: string | undefined
+  value: string
 }
