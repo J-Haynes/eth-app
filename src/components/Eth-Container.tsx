@@ -44,7 +44,7 @@ export default function EthContainer() {
         const sortedBlocks = blockData.sort((a, b) => a.key - b.key)
         setBlocks(sortedBlocks)
         console.log(sortedBlocks)
-        setLatestTxs(sortedBlocks[0].transactions.slice(0, 5))
+        setLatestTxs(sortedBlocks[0].transactions.slice(-5))
       })
     })
   }, [])
@@ -156,7 +156,9 @@ export default function EthContainer() {
                       </Table.Cell>
                       <Table.Cell>
                         <Icon name="ethereum"></Icon>{' '}
-                        {(parseInt(tx.value, 16) / 10 ** 18).toFixed(2)}
+                        {parseInt(tx.value, 16) / 10 ** 18 > 0.0001
+                          ? (parseInt(tx.value, 16) / 10 ** 18).toFixed(4)
+                          : 0}{' '}
                         Eth
                       </Table.Cell>
                     </Table.Row>

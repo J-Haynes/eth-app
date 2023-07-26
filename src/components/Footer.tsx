@@ -8,7 +8,13 @@ export default function Footer() {
         <Grid.Column>Made by Jack Haynes</Grid.Column>
         <Grid.Column textAlign="center">
           Powered by{' '}
-          <a href="https://www.coingecko.com/en/api">CoinGecko API</a>
+          <a
+            target="_blank"
+            href="https://www.coingecko.com/en/api"
+            rel="noreferrer"
+          >
+            CoinGecko API
+          </a>
         </Grid.Column>
         <Grid.Column textAlign="right">
           <a
