@@ -74,7 +74,7 @@ export default function EthContainer() {
                           position="top center"
                           trigger={
                             <p>
-                              Miner {block.miner.slice(0, 4)}...
+                              Miner: {block.miner.slice(0, 4)}...
                               {block.miner.slice(-5)}
                             </p>
                           }
