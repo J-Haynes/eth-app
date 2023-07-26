@@ -74,7 +74,7 @@ export default function EthContainer() {
                           position="top center"
                           trigger={
                             <p>
-                              Miner: {block.miner.slice(0, 4)}...
+                              Miner: {block.miner.slice(0, 6)}...
                               {block.miner.slice(-5)}
                             </p>
                           }
@@ -123,7 +123,7 @@ export default function EthContainer() {
                           position="top center"
                           trigger={
                             <span>
-                              {tx.id?.slice(0, 4)}...
+                              {tx.id?.slice(0, 6)}...
                               {tx.id?.slice(-5)}
                             </span>
                           }
@@ -136,7 +136,7 @@ export default function EthContainer() {
                           position="top center"
                           trigger={
                             <p>
-                              To: {tx.to?.slice(0, 4)}...{tx.to?.slice(-5)}
+                              To: {tx.to?.slice(0, 6)}...{tx.to?.slice(-5)}
                             </p>
                           }
                         >
@@ -146,7 +146,7 @@ export default function EthContainer() {
                           position="top center"
                           trigger={
                             <p>
-                              From: {tx.from?.slice(0, 4)}...
+                              From: {tx.from?.slice(0, 6)}...
                               {tx.from?.slice(-5)}
                             </p>
                           }
