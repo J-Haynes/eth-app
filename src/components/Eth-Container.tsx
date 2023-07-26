@@ -18,61 +18,31 @@ const alchemy = new Alchemy(alchemySettings)
 export default function EthContainer() {
   const [blocks, setBlocks] = useState([] as blocksModel[])
 
-  // const [transactions, setTransactions] = useState([] as transactionsModel[])
-
-  // useEffect(() => {
-  //   alchemy.core.getBlockNumber().then((block) => {
-  //     fetchEthRewardBlocks(block).then((res: blocksModel[]) => {
-  //       console.log('blocks array', res)
-  //       setBlocks(res)
-  //     })
-  //     const transactionsArray: React.SetStateAction<transactionsModel[]> = []
-  //     for (let i = 0; i < 3; i++) {
-  //       console.log('hi')
-  //       alchemy.core.getTransaction(blocks[0].transactions[i]).then((res) => {
-  //         transactionsArray.push({
-  //           key: i,
-  //           id: res?.hash,
-  //           to: res?.to,
-  //           from: res?.from,
-  //           value: res?.value._hex,
-  //         })
-  //       })
-  //     }
-  //     setTransactions(transactionsArray)
-  //     console.log('transactions array', transactions)
-  //   })
-  // }, [])
-
-  const [transactions, setTransactions] = useState([] as transactionsModel[])
-
-  const txsArray = [] as transactionsModel[]
-
   useEffect(() => {
     alchemy.core.getBlockNumber().then((block) => {
-      fetchEthRewardBlocks(block).then((res: blocksModel[]) => {
-        setBlocks(res)
+      const fetchBlockPromises = []
+      for (let i = 0; i < 5; i++) {
+        fetchBlockPromises.push(
+          alchemy.core.getBlockWithTransactions(block - i).then((res) => ({
+            key: i,
+            block: res.number,
+            miner: res.miner,
+            date: res.timestamp,
+            txs: res.transactions.length,
+            transactions: res.transactions.map((tx) => ({
+              id: tx.hash,
+              to: tx.to,
+              from: tx.from,
+              value: tx.value._hex,
+            })),
+          }))
+        )
+      }
+      Promise.all(fetchBlockPromises).then((blockData) => {
+        const sortedBlocks = blockData.sort((a, b) => a.key - b.key)
+        setBlocks(sortedBlocks)
       })
-      alchemy.core
-        .getBlockWithTransactions(block)
-        .then((res) => console.log('blockwitsstuff', res))
     })
-
-    // use coingecko/etherscan for prices and supply
-    // use alchemy to rewrite block data, much better api rules (12M/month)
-    // expand to view 6 blocks/txs
-
-    // for (let i = 0; i < 3; i++) {
-    //   alchemy.core.getTransaction(blocks[0].transactions[i]).then((res) =>
-    //     transactions.push({
-    //       key: i,
-    //       id: res?.hash,
-    //       to: res?.to,
-    //       from: res?.from,
-    //       value: res?.value._hex,
-    //     })
-    //   )
-    // }
   }, [])
 
   return (
@@ -111,7 +81,6 @@ export default function EthContainer() {
                       </Table.Cell>
                       <Table.Cell>
                         <Label color="grey">Size</Label>{' '}
-                        {(parseInt(block.size, 16) / 1024).toFixed(1)} kilobytes
                       </Table.Cell>
                     </Table.Row>
                   )
@@ -128,17 +97,7 @@ export default function EthContainer() {
                   </Table.Cell>
                 </Table.Row>
               </Table.Header>
-              <Table.Body>
-                {transactions.map((tx) => {
-                  return (
-                    <Table.Row>
-                      <Table.Cell>
-                        <Label color="grey">Tx</Label>
-                      </Table.Cell>
-                    </Table.Row>
-                  )
-                })}
-              </Table.Body>
+              <Table.Body></Table.Body>
             </Table>
           </Grid.Column>
         </Grid.Row>

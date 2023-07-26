@@ -7,14 +7,12 @@ export interface blocksModel {
   key: number
   block: number
   miner: string
-  size: string
-  date: string
+  date: number
   txs: number
-  transactions: string[]
+  transactions: transactionsModel[]
 }
 
 export interface transactionsModel {
-  key: number
   id: string | undefined
   to: string | undefined
   from: string | undefined
