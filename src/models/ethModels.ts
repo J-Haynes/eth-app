@@ -19,3 +19,6 @@ export interface transactionsModel {
   from: string | undefined
   value: string
 }
+export interface EthContainerProps {
+  ethPrice: number
+}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 
 import EthHeader from './components/Header'
@@ -8,12 +8,14 @@ import Footer from './components/Footer'
 import EthContainer from './components/Eth-Container'
 
 function App() {
+  const [ethPrice, setEthPrice] = useState(0)
+
   return (
     <div>
       <EthHeader></EthHeader>
-      <EthOverview></EthOverview>
+      <EthOverview setEthPrice={setEthPrice}></EthOverview>
       <SearchBar></SearchBar>
-      <EthContainer></EthContainer>
+      <EthContainer ethPrice={ethPrice}></EthContainer>
       <Footer></Footer>
     </div>
   )

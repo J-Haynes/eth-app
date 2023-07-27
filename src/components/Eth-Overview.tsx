@@ -8,7 +8,11 @@ import {
   fetchBtcPrice,
 } from '../api/clientApi'
 
-export default function EthOverview() {
+export default function EthOverview({
+  setEthPrice,
+}: {
+  setEthPrice: React.Dispatch<React.SetStateAction<number>>
+}) {
   const [ethPrices, setEthPrices] = useState({
     ethPrice: 0,
     ethPrice24hr: 0,
@@ -25,7 +29,10 @@ export default function EthOverview() {
   const [btcPrice, setBtcPrice] = useState(0)
 
   useEffect(() => {
-    fetchEthPrices().then((res) => setEthPrices(res))
+    fetchEthPrices().then((res) => {
+      setEthPrices(res)
+      setEthPrice(res.ethPrice)
+    })
     fetchEthSupply().then((res) => setEthSupply(res))
     fetchGasPrice().then((res) => setGasPrice(res))
     fetchBtcPrice().then((res) => setBtcPrice(res))

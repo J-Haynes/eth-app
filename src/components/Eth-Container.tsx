@@ -5,7 +5,11 @@ import { Network, Alchemy } from 'alchemy-sdk'
 
 import { useState } from 'react'
 
-import { blocksModel, transactionsModel } from '../models/ethModels'
+import {
+  blocksModel,
+  transactionsModel,
+  EthContainerProps,
+} from '../models/ethModels'
 
 const alchemySettings = {
   apiKey: 'HJw3itzXQn2CBtZSPStaD689a279I1__',
@@ -14,7 +18,7 @@ const alchemySettings = {
 
 const alchemy = new Alchemy(alchemySettings)
 
-export default function EthContainer() {
+export default function EthContainer({ ethPrice }: EthContainerProps) {
   const [blocks, setBlocks] = useState([] as blocksModel[])
 
   const [latestTxs, setLatestTxs] = useState([] as transactionsModel[])
@@ -155,11 +159,26 @@ export default function EthContainer() {
                         </Popup>
                       </Table.Cell>
                       <Table.Cell>
-                        <Icon name="ethereum"></Icon>{' '}
-                        {parseInt(tx.value, 16) / 10 ** 18 > 0.0001
-                          ? (parseInt(tx.value, 16) / 10 ** 18).toFixed(4)
-                          : 0}{' '}
-                        Eth
+                        <Icon name="ethereum"></Icon>
+                        <Popup
+                          position="top center"
+                          trigger={
+                            <Label color="blue">
+                              {parseInt(tx.value, 16) / 10 ** 18 > 0.0001
+                                ? (parseInt(tx.value, 16) / 10 ** 18).toFixed(4)
+                                : 0}{' '}
+                              Eth
+                            </Label>
+                          }
+                        >
+                          <p>
+                            $
+                            {(
+                              ethPrice *
+                              (parseInt(tx.value, 16) / 10 ** 18)
+                            ).toFixed(2)}
+                          </p>
+                        </Popup>
                       </Table.Cell>
                     </Table.Row>
                   )
